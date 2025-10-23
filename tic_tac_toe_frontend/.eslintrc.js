@@ -2,60 +2,42 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es2021: true,
+    es2022: true,
     node: true
   },
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true
+    }
+  },
+  plugins: ["react", "react-hooks", "jsx-a11y", "import", "prettier"],
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:import/recommended",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
-  parserOptions: {
-    ecmaFeatures: { jsx: true },
-    ecmaVersion: "latest",
-    sourceType: "module"
-  },
   settings: {
     react: {
       version: "detect"
-    },
-    "import/resolver": {
-      node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"]
-      }
     }
   },
   rules: {
+    "prettier/prettier": "warn",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
-    "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     "import/order": [
       "warn",
       {
-        groups: [["builtin", "external"], "internal", ["parent", "sibling", "index"]],
+        "alphabetize": { "order": "asc", "caseInsensitive": true },
         "newlines-between": "always",
-        alphabetize: { order: "asc", caseInsensitive: true }
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"]
       }
     ]
   },
-  overrides: [
-    {
-      files: ["**/*.{ts,tsx}"],
-      parser: "@typescript-eslint/parser",
-      plugins: ["@typescript-eslint"],
-      extends: ["plugin:@typescript-eslint/recommended"],
-      rules: {
-        "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }]
-      }
-    },
-    {
-      files: ["**/*.test.*", "**/*.spec.*", "**/__tests__/**"],
-      env: {
-        jest: true
-      }
-    }
-  ]
+  ignorePatterns: ["dist", "node_modules"]
 };
